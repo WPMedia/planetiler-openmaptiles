@@ -263,6 +263,9 @@ public class Place implements
         }
         int rank = Math.min(6, Math.max(1, state.rank));
 
+        // Add the state abbreviation in Post style
+        names.put("state_post", OmtLanguageUtils.getPostStyle(state.name));
+
         features.point(LAYER_NAME).setBufferPixels(BUFFER_SIZE)
           .putAttrs(names)
           .setAttr(Fields.CLASS, element.place())

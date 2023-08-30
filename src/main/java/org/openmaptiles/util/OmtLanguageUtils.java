@@ -37,6 +37,7 @@ package org.openmaptiles.util;
 
 import static com.onthegomap.planetiler.util.LanguageUtils.*;
 import static org.openmaptiles.util.Utils.coalesce;
+import static java.util.Map.entry;
 
 import com.onthegomap.planetiler.util.LanguageUtils;
 import com.onthegomap.planetiler.util.Translations;
@@ -119,5 +120,73 @@ public class OmtLanguageUtils {
       .filter(e -> !EN_DE_NAME_KEYS.contains(e.getKey()) && VALID_NAME_TAGS.test(e.getKey()))
       .map(Map.Entry::getValue)
       .map(LanguageUtils::string);
+  }
+
+
+  static Map<String, String> stateNameToPost = Map.ofEntries(
+      entry("Alabama", "Ala."),
+      entry("Alaska", "Alaska"),
+      entry("Arizona", "Ariz."),
+      entry("Arkansas", "Ark."),
+      entry("American Samoa", "A.S."),
+      entry("California", "Calif."),
+      entry("Colorado", "Colo."),
+      entry("Connecticut", "Conn."),
+      entry("District of Columbia", "D.C."),
+      entry("Delaware", "Del."),
+      entry("Florida", "Fla."),
+      entry("Georgia", "Ga."),
+      entry("Guam", "Guam"),
+      entry("Hawaii", "Hawaii"),
+      entry("Idaho", "Idaho"),
+      entry("Illinois", "Ill."),
+      entry("Indiana", "Ind."),
+      entry("Iowa", "Iowa"),
+      entry("Kansas", "Kan."),
+      entry("Kentucky", "Ky."),
+      entry("Louisiana", "La."),
+      entry("Maine", "Maine"),
+      entry("Maryland", "Md."),
+      entry("Marshall Islands", "M.H."),
+      entry("Massachusetts", "Mass."),
+      entry("Michigan", "Mich."),
+      entry("Minnesota", "Minn."),
+      entry("Mississippi", "Miss."),
+      entry("Missouri", "Mo."),
+      entry("Montana", "Mont."),
+      entry("Nebraska", "Neb."),
+      entry("Nevada", "Nev."),
+      entry("New Hampshire", "N.H."),
+      entry("New Jersey", "N.J."),
+      entry("New Mexico", "N.M."),
+      entry("New York", "N.Y."),
+      entry("North Carolina", "N.C."),
+      entry("North Dakota", "N.D."),
+      entry("Northern Mariana Islands", "M.P."),
+      entry("Ohio", "Ohio"),
+      entry("Oklahoma", "Okla."),
+      entry("Oregon", "Ore."),
+      entry("Pennsylvania", "Pa."),
+      entry("Puerto Rico", "P.R."),
+      entry("Rhode Island", "R.I."),
+      entry("South Carolina", "S.C."),
+      entry("South Dakota", "S.D."),
+      entry("Tennessee", "Tenn."),
+      entry("Texas", "Tex."),
+      entry("Utah", "Utah"),
+      entry("Vermont", "Vt."),
+      entry("Virginia", "Va."),
+      entry("Virgin Islands", "V.I."),
+      entry("Washington", "Wash."),
+      entry("West Virginia", "W.Va."),
+      entry("Wisconsin", "Wis."),
+      entry("Wyoming", "Wyo.")
+  );
+  /**
+   * Converts a state name to Washington Post style abbreviation
+   * e.g. "California" => "Calif."
+   */
+  public static String getPostStyle(String name) {
+    return stateNameToPost.get(name);
   }
 }
