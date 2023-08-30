@@ -49,6 +49,7 @@ public class OpenMapTilesProfile extends ForwardingProfile {
   public static final String LAKE_CENTERLINE_SOURCE = "lake_centerlines";
   public static final String WATER_POLYGON_SOURCE = "water_polygons";
   public static final String NATURAL_EARTH_SOURCE = "natural_earth";
+  public static final String CUSTOM_LAYERS_SOURCE = "custom-layers";
   public static final String OSM_SOURCE = "osm";
   /** Index to efficiently find the imposm3 "table row" constructor from an OSM element based on its tags. */
   private final MultiExpression.Index<RowDispatch> osmMappings;
@@ -106,6 +107,9 @@ public class OpenMapTilesProfile extends ForwardingProfile {
       }
       if (handler instanceof OsmAllProcessor processor) {
         registerSourceHandler(OSM_SOURCE, processor::processAllOsm);
+      }
+      if (handler instanceof CustomLayersProcessor processor) {
+        registerSourceHandler(CUSTOM_LAYERS_SOURCE, processor::processCustomLayers);
       }
     }
 
@@ -233,6 +237,12 @@ public class OpenMapTilesProfile extends ForwardingProfile {
     void processLakeCenterline(SourceFeature feature, FeatureCollector features);
   }
 
+  public interface CustomLayersProcessor {
+
+    /**
+     */
+    void processCustomLayers(SourceFeature feature, FeatureCollector features);
+  }
   /**
    * Layers should implement this interface to subscribe to elements from
    * <a href="https://osmdata.openstreetmap.de/data/water-polygons.html">OSM water polygons source</a>.

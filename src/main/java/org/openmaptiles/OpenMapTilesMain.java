@@ -33,11 +33,10 @@ public class OpenMapTilesMain {
       // override any of these with arguments: --osm_path=... or --osm_url=...
       // or OSM_PATH=... OSM_URL=... environmental argument
       // or osm_path=... osm_url=... in a config file
-      .addShapefileSource("EPSG:3857", OpenMapTilesProfile.LAKE_CENTERLINE_SOURCE,
-        sourcesDir.resolve("lake_centerline.shp.zip"),
-        // upstream is at https://github.com/acalcutt/osm-lakelines/releases/download/latest/lake_centerline.shp.zip ,
-        // following is same URL as used in the OpenMapTiles (but SHP format), a mirror maintained by MapTiler
-        "https://dev.maptiler.download/geodata/omt/lake_centerline.shp.zip")
+
+      // TODO this is gross
+      .addShapefileGlobSource(OpenMapTilesProfile.CUSTOM_LAYERS_SOURCE, sourcesDir.resolve("../../1-cleaned/custom-layers.zip"), "*.shp")
+
       .addShapefileSource(OpenMapTilesProfile.WATER_POLYGON_SOURCE,
         sourcesDir.resolve("water-polygons-split-3857.zip"),
         "https://osmdata.openstreetmap.de/download/water-polygons-split-3857.zip")
@@ -49,6 +48,11 @@ public class OpenMapTilesMain {
       .addOsmSource(OpenMapTilesProfile.OSM_SOURCE,
         sourcesDir.resolve(area.replaceAll("[^a-zA-Z]+", "_") + ".osm.pbf"),
         "planet".equalsIgnoreCase(area) ? ("aws:latest") : ("geofabrik:" + area))
+      .addShapefileSource("EPSG:3857", OpenMapTilesProfile.LAKE_CENTERLINE_SOURCE,
+        sourcesDir.resolve("lake_centerline.shp.zip"),
+        // upstream is at https://github.com/acalcutt/osm-lakelines/releases/download/latest/lake_centerline.shp.zip ,
+        // following is same URL as used in the OpenMapTiles (but SHP format), a mirror maintained by MapTiler
+        "https://dev.maptiler.download/geodata/omt/lake_centerline.shp.zip")
       // override with --mbtiles=... argument or MBTILES=... env var or mbtiles=... in a config file
       .setOutput("mbtiles", dataDir.resolve("output.mbtiles"))
       .run();
